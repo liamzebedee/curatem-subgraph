@@ -1,6 +1,15 @@
-type Gravatar @entity {
+
+type Market @entity {
   id: ID!
-  owner: Bytes!
-  displayName: String!
-  imageUrl: String!
+  questionId: String!
+  conditionId: String!
+  metadataCID: String!
+  community: Community!
+}
+
+type Community @entity {
+  id: ID!
+  moderator: String!
+  token: String!
+  markets: [Market!]! @derivedFrom(field: "community")
 }
