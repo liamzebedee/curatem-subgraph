@@ -95,7 +95,7 @@ async function main() {
     const contracts = [
       'Curatem'
     ]
-    let resolver: ContractResolver = new DeploymentsJsonResolver(chainId, join(__dirname, '../spam-contracts/deployments.json'))
+    let resolver: ContractResolver = new DeploymentsJsonResolver(chainId, join(__dirname, '../curatem-contracts/deployments.json'))
 
     for(const contractName of contracts) {
       const { address, blockNumber } = resolver.resolve(contractName)

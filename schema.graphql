@@ -5,6 +5,7 @@ type Market @entity {
   conditionId: String!
   metadataCID: String!
   community: Community!
+  itemUrl: String!
 }
 
 type Community @entity {

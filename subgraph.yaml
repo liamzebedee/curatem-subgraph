@@ -8,21 +8,42 @@ dataSources:
     name: Curatem
     network: mainnet
     source:
-      address: '0x63fea6E447F120B8Faf85B53cdaD8348e645D80E'
+      address: '0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9'
       abi: Curatem
-      startBlock: 195
+      startBlock: 92
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
+        - Community
         - Market
       abis:
         - name: Curatem
-          file: ../spam-contracts/abis/Curatem.json
+          file: ../curatem-contracts/abis/Curatem.json
         - name: CuratemCommunity
-          file: ../spam-contracts/abis/CuratemCommunity.json
+          file: ../curatem-contracts/abis/CuratemCommunity.json
       eventHandlers:
-        - event: MarketCreated(address,bytes32,bytes32,bytes32)
+        - event: NewCommunity(address)
+          handler: handleNewCommunity
+      file: ./src/mapping.ts
+templates:
+  - kind: ethereum/contract
+    name: CuratemCommunity
+    network: mainnet
+    source:
+      abi: CuratemCommunity
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Community
+        - Market
+      abis:
+        - name: CuratemCommunity
+          file: ../curatem-contracts/abis/CuratemCommunity.json
+      eventHandlers:
+        - event: MarketCreated(bytes32,bytes32,bytes32)
           handler: handleMarketCreated
       file: ./src/mapping.ts
