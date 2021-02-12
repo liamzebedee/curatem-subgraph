@@ -1,12 +1,13 @@
 // Schemas.
-import { Market, Community } from '../generated/schema'
+import { Market, Community, SpamPredictionMarket } from '../generated/schema'
 
 // Contracts.
 import { NewCommunity } from '../generated/Curatem/Curatem'
-import { CuratemCommunity, MarketCreated } from '../generated/CuratemCommunity/CuratemCommunity'
+import { CuratemCommunity, MarketCreated, NewSpamPredictionMarket } from '../generated/Curatem/CuratemCommunity'
 
 // Template data source.
 import { CuratemCommunity as CuratemCommunityTemplate } from '../generated/templates'
+import { SpamPredictionMarket as SpamPredictionMarketTemplate } from '../generated/templates'
 
 // Utils.
 import { Address, Bytes, ipfs, JSONValue, log, Value } from '@graphprotocol/graph-ts'
@@ -28,6 +29,27 @@ export function handleNewCommunity(event: NewCommunity): void {
   community.save()
 }
 
+export function handleNewSpamPM(event: NewSpamPredictionMarket): void {
+  const communityAddress = event.address
+  const address = event.params.market
+  const hashDigest = event.params.hashDigest
+  const questionId = event.params.questionId
+
+
+  const community = getOrCreateCommunity(communityAddress)
+  let communityContract = CuratemCommunity.bind(communityAddress)
+  const itemUrl = communityContract.getUrl(hashDigest)  
+  log.info("New market for URL {}", [itemUrl])
+
+  let market = new SpamPredictionMarket(address.toHexString())
+  market.community = community.id
+  market.questionId = questionId.toHexString()
+  market.itemUrl = itemUrl
+  market.save()
+
+  SpamPredictionMarketTemplate.create(event.params.market)
+}
+
 export function handleMarketCreated(event: MarketCreated): void {
   // Recover multihash.
   // A multihash consists of a series of three varints:
@@ -42,6 +64,7 @@ export function handleMarketCreated(event: MarketCreated): void {
   const hashDigest = event.params.hashDigest
   const conditionId = event.params.conditionId
   const questionId = event.params.questionId
+  const fixedProductMarketMaker = event.params.fixedProductMarketMaker
   
 
   const community = getOrCreateCommunity(communityAddress)
@@ -64,6 +87,7 @@ export function handleMarketCreated(event: MarketCreated): void {
   market.community = community.id
   market.conditionId = conditionId.toHexString()
   market.questionId = questionId.toHexString()
+  market.fixedProductMarketMaker = fixedProductMarketMaker.toHexString()
   market.itemUrl = itemUrl
   market.save()
 }

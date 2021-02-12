@@ -8,9 +8,9 @@ dataSources:
     name: Curatem
     network: mainnet
     source:
-      address: '0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9'
+      address: '0x63ecE4C05B8fB272D16844E96702Ea2f26370982'
       abi: Curatem
-      startBlock: 92
+      startBlock: 771
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -44,6 +44,37 @@ templates:
         - name: CuratemCommunity
           file: ../curatem-contracts/abis/CuratemCommunity.json
       eventHandlers:
-        - event: MarketCreated(bytes32,bytes32,bytes32)
+        - event: MarketCreated(bytes32,bytes32,bytes32,address)
           handler: handleMarketCreated
+        - event: NewSpamPredictionMarket(bytes32,bytes32,address)
+          handler: handleNewSpamPM
       file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: SpamPredictionMarket
+    network: mainnet
+    source:
+      abi: SpamPredictionMarket
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Community
+        - Market
+      abis:
+        - name: SpamPredictionMarket
+          file: ../curatem-contracts/abis/SpamPredictionMarket.json
+      eventHandlers:
+        - event: Initialized()
+          handler: handleInitialized
+        - event: PoolCreated(address)
+          handler: handlePoolCreated
+        - event: SharesBought(address,uint256)
+          handler: handleSharesBought
+        - event: SharesSold(address,uint256)
+          handler: handleSharesSold
+        - event: Finalized(uint256)
+          handler: handleFinalized
+        - event: SharesRedeemed(address,uint256)
+          handler: handleSharesRedeemed
+      file: ./src/spam_prediction_market.ts

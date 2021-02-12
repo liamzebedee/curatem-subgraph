@@ -6,6 +6,7 @@ type Market @entity {
   metadataCID: String!
   community: Community!
   itemUrl: String!
+  fixedProductMarketMaker: String!
 }
 
 type Community @entity {
@@ -13,4 +14,12 @@ type Community @entity {
   moderator: String!
   token: String!
   markets: [Market!]! @derivedFrom(field: "community")
+  spamMarkets: [SpamPredictionMarket!]! @derivedFrom(field: "community")
+}
+
+type SpamPredictionMarket @entity {
+  id: ID!
+  questionId: String!
+  community: Community!
+  itemUrl: String!
 }
