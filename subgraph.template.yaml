@@ -23,6 +23,8 @@ dataSources:
           file: ../curatem-contracts/abis/Curatem.json
         - name: CuratemCommunity
           file: ../curatem-contracts/abis/CuratemCommunity.json
+        - name: SpamPredictionMarket
+          file: ../curatem-contracts/abis/SpamPredictionMarket.json
       eventHandlers:
         - event: NewCommunity(address)
           handler: handleNewCommunity
@@ -43,6 +45,8 @@ templates:
       abis:
         - name: CuratemCommunity
           file: ../curatem-contracts/abis/CuratemCommunity.json
+        - name: SpamPredictionMarket
+          file: ../curatem-contracts/abis/SpamPredictionMarket.json
       eventHandlers:
         - event: MarketCreated(bytes32,bytes32,bytes32,address)
           handler: handleMarketCreated

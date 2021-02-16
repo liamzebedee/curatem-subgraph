@@ -4,6 +4,7 @@ import { Market, Community, SpamPredictionMarket } from '../generated/schema'
 // Contracts.
 import { NewCommunity } from '../generated/Curatem/Curatem'
 import { CuratemCommunity, MarketCreated, NewSpamPredictionMarket } from '../generated/Curatem/CuratemCommunity'
+import { SpamPredictionMarket as SpamPredictionMarketContract } from '../generated/Curatem/SpamPredictionMarket'
 
 // Template data source.
 import { CuratemCommunity as CuratemCommunityTemplate } from '../generated/templates'
@@ -42,9 +43,13 @@ export function handleNewSpamPM(event: NewSpamPredictionMarket): void {
   log.info("New market for URL {}", [itemUrl])
 
   let market = new SpamPredictionMarket(address.toHexString())
+  let marketContract = SpamPredictionMarketContract.bind(address)
+  market.spamToken = marketContract.spamToken().toHexString()
+  market.notSpamToken = marketContract.notSpamToken().toHexString()
   market.community = community.id
   market.questionId = questionId.toHexString()
   market.itemUrl = itemUrl
+  market.createdAt = event.block.timestamp.toI32()
   market.save()
 
   SpamPredictionMarketTemplate.create(event.params.market)

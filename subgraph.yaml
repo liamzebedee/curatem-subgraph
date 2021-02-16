@@ -8,9 +8,9 @@ dataSources:
     name: Curatem
     network: mainnet
     source:
-      address: '0x63ecE4C05B8fB272D16844E96702Ea2f26370982'
+      address: '0x2B8F5e69C35c1Aff4CCc71458CA26c2F313c3ed3'
       abi: Curatem
-      startBlock: 771
+      startBlock: 799
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -23,6 +23,8 @@ dataSources:
           file: ../curatem-contracts/abis/Curatem.json
         - name: CuratemCommunity
           file: ../curatem-contracts/abis/CuratemCommunity.json
+        - name: SpamPredictionMarket
+          file: ../curatem-contracts/abis/SpamPredictionMarket.json
       eventHandlers:
         - event: NewCommunity(address)
           handler: handleNewCommunity
@@ -43,6 +45,8 @@ templates:
       abis:
         - name: CuratemCommunity
           file: ../curatem-contracts/abis/CuratemCommunity.json
+        - name: SpamPredictionMarket
+          file: ../curatem-contracts/abis/SpamPredictionMarket.json
       eventHandlers:
         - event: MarketCreated(bytes32,bytes32,bytes32,address)
           handler: handleMarketCreated

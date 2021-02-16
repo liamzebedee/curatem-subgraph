@@ -22,4 +22,13 @@ type SpamPredictionMarket @entity {
   questionId: String!
   community: Community!
   itemUrl: String!
+  createdAt: Int!
+  spamToken: String!
+  notSpamToken: String!
 }
+
+# enum MarketState {
+#   OPEN,
+#   ARBITRATING,
+#   FINALIZED
+# }
