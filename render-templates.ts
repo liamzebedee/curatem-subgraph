@@ -86,6 +86,7 @@ async function main() {
     const templateData = {
       network: {
         [1]: 'mainnet',
+        [42]: 'mainnet',
         [4]: 'rinkeby',
         [77]: 'poa-sokol',
         [100]: 'xdai',
