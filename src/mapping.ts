@@ -19,10 +19,10 @@ export function handleNewCommunity(event: NewCommunity): void {
   const community = new Community(communityAddress.toHexString())
 
   const contract = CuratemCommunity.bind(communityAddress)
-  const moderator = contract.moderator()
+  const moderatorArbitrator = contract.moderatorArbitrator()
   const token = contract.token()
 
-  community.moderator = moderator.toHexString()
+  community.moderatorArbitrator = moderatorArbitrator.toHexString()
   community.token = token.toHexString()
 
   CuratemCommunityTemplate.create(communityAddress)
@@ -107,10 +107,10 @@ function getOrCreateCommunity(address: Address): Community {
   }
 
   const contract = CuratemCommunity.bind(address)
-  const moderator = contract.moderator()
+  const moderatorArbitrator = contract.moderatorArbitrator()
   const token = contract.token()
 
-  community.moderator = moderator.toHexString()
+  community.moderatorArbitrator = moderatorArbitrator.toHexString()
   community.token = token.toHexString()
   
   community.save()

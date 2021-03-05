@@ -11,7 +11,7 @@ type Market @entity {
 
 type Community @entity {
   id: ID!
-  moderator: String!
+  moderatorArbitrator: String!
   token: String!
   markets: [Market!]! @derivedFrom(field: "community")
   spamMarkets: [SpamPredictionMarket!]! @derivedFrom(field: "community")

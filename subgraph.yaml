@@ -8,9 +8,9 @@ dataSources:
     name: Curatem
     network: mainnet
     source:
-      address: '0x2B8F5e69C35c1Aff4CCc71458CA26c2F313c3ed3'
+      address: '0x2EeA9517B018B2f63072a9729ceC3EE524809460'
       abi: Curatem
-      startBlock: 799
+      startBlock: 23704009
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
