@@ -1,12 +1,8 @@
 import { log } from "@graphprotocol/graph-ts";
-import { Finalized, Initialized, PoolCreated, SharesBought, SharesRedeemed, SharesSold } from '../generated/templates/SpamPredictionMarket/SpamPredictionMarket'
+import { Finalized, Initialized, SharesBought, SharesRedeemed, SharesSold } from '../generated/templates/SpamPredictionMarket/SpamPredictionMarket'
 
 export function handleInitialized(event: Initialized): void {
     log.info("handleInitialized", [])
-}
-
-export function handlePoolCreated(event: PoolCreated): void {
-    log.info("handlePoolCreated", [])
 }
 
 export function handleSharesBought(event: SharesBought): void {

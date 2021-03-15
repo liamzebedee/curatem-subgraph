@@ -3,7 +3,7 @@ import { Market, Community, SpamPredictionMarket } from '../generated/schema'
 
 // Contracts.
 import { NewCommunity } from '../generated/Curatem/Curatem'
-import { CuratemCommunity, MarketCreated, NewSpamPredictionMarket } from '../generated/Curatem/CuratemCommunity'
+import { CuratemCommunity, NewSpamPredictionMarket } from '../generated/Curatem/CuratemCommunity'
 import { SpamPredictionMarket as SpamPredictionMarketContract } from '../generated/Curatem/SpamPredictionMarket'
 
 // Template data source.
@@ -54,49 +54,6 @@ export function handleNewSpamPM(event: NewSpamPredictionMarket): void {
 
   SpamPredictionMarketTemplate.create(event.params.market)
 }
-
-export function handleMarketCreated(event: MarketCreated): void {
-  // Recover multihash.
-  // A multihash consists of a series of three varints:
-  // (digest fn code/id, digest length, digest)
-  // We encode assumptions of the first two.
-  // 00701220
-  // cid-version  = 00 (v0)
-  // multicodec   = 70 (dag-pb)
-  // digest fn    = 12 (sha256)
-  // digest lengh = 20 (32 bytes)
-  const communityAddress = event.address
-  const hashDigest = event.params.hashDigest
-  const conditionId = event.params.conditionId
-  const questionId = event.params.questionId
-  const fixedProductMarketMaker = event.params.fixedProductMarketMaker
-  
-
-  const community = getOrCreateCommunity(communityAddress)
-  let communityContract = CuratemCommunity.bind(communityAddress)
-  const itemUrl = communityContract.getUrl(hashDigest)
-
-  const cid = Bytes.fromHexString(`1220` + hashDigest.toHexString().slice(2)).toBase58()
-  
-  log.info("New market for URL {}", [itemUrl])
-
-  // TODO: Re-enable IPFS pinning when it is deterministic.
-  // ipfs.mapJSON(cid.toBase58(), 'processIpfsMetadata', Value.fromString(marketId))
-  // const metadata = ipfs.cat(cid.toString())
-  // const js = Value.fromBytes(metadata as Bytes)
-  // log.info("{}", [js.toString()])
-  
-
-  let market = new Market(cid)
-  market.metadataCID = cid
-  market.community = community.id
-  market.conditionId = conditionId.toHexString()
-  market.questionId = questionId.toHexString()
-  market.fixedProductMarketMaker = fixedProductMarketMaker.toHexString()
-  market.itemUrl = itemUrl
-  market.save()
-}
-
 
 function getOrCreateCommunity(address: Address): Community {
   let community = Community.load(address.toHexString()) as Community

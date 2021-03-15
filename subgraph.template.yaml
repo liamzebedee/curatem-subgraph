@@ -20,7 +20,7 @@ dataSources:
         - Market
       abis:
         - name: Curatem
-          file: ../curatem-contracts/abis/Curatem.json
+          file: ../curatem-contracts/abis/CuratemV1.json
         - name: CuratemCommunity
           file: ../curatem-contracts/abis/CuratemCommunity.json
         - name: SpamPredictionMarket
@@ -48,8 +48,6 @@ templates:
         - name: SpamPredictionMarket
           file: ../curatem-contracts/abis/SpamPredictionMarket.json
       eventHandlers:
-        - event: MarketCreated(bytes32,bytes32,bytes32,address)
-          handler: handleMarketCreated
         - event: NewSpamPredictionMarket(bytes32,bytes32,address)
           handler: handleNewSpamPM
       file: ./src/mapping.ts
@@ -71,13 +69,11 @@ templates:
       eventHandlers:
         - event: Initialized()
           handler: handleInitialized
-        - event: PoolCreated(address)
-          handler: handlePoolCreated
         - event: SharesBought(address,uint256)
           handler: handleSharesBought
         - event: SharesSold(address,uint256)
           handler: handleSharesSold
-        - event: Finalized(uint256)
+        - event: Finalized()
           handler: handleFinalized
         - event: SharesRedeemed(address,uint256)
           handler: handleSharesRedeemed

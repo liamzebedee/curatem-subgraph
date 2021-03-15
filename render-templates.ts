@@ -82,12 +82,13 @@ async function main() {
     const provider = new ethers.providers.JsonRpcProvider(ETH_RPC_URL)
     let network = await provider.getNetwork()
     let chainId = network.chainId
+    console.log(`Resolving contracts for chainID: ${chainId}`)
 
     const templateData = {
       network: {
         [1]: 'mainnet',
         [42]: 'mainnet',
-        [4]: 'rinkeby',
+        [4]: 'mainnet',
         [77]: 'poa-sokol',
         [100]: 'xdai',
       }[chainId] || 'mainnet'
