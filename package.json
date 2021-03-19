@@ -2,12 +2,12 @@
   "name": "spam-subgraph",
   "version": "0.1.0",
   "scripts": {
-    "create": "graph create liamzebedee/spam-subgraph --node https://api.thegraph.com/deploy/",
-    "create-local": "graph create liamzebedee/spam-subgraph --node http://127.0.0.1:8020",
-    "refresh-local": "graph remove liamzebedee/spam-subgraph --node http://127.0.0.1:8020 && yarn create-local && yarn deploy-local",
+    "create": "graph create liamzebedee/curatem-subgraph --node https://api.thegraph.com/deploy/",
+    "create-local": "graph create liamzebedee/curatem-subgraph --node http://127.0.0.1:8020",
+    "refresh-local": "graph remove liamzebedee/curatem-subgraph --node http://127.0.0.1:8020 && yarn create-local && yarn deploy-local",
     "build": "graph build",
-    "deploy": "graph deploy liamzebedee/spam-subgraph --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-local": "graph deploy liamzebedee/spam-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "deploy": "graph deploy liamzebedee/curatem-subgraph --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-local": "graph deploy liamzebedee/curatem-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
     "codegen": "ts-node render-templates.ts && graph codegen"
   },
   "devDependencies": {
