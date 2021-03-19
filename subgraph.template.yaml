@@ -25,10 +25,12 @@ dataSources:
           file: ../curatem-contracts/abis/CuratemCommunity.json
         - name: SpamPredictionMarket
           file: ../curatem-contracts/abis/SpamPredictionMarket.json
+        - name: ERC20
+          file: ../curatem-contracts/abis/ERC20.json
       eventHandlers:
         - event: NewCommunity(address)
           handler: handleNewCommunity
-      file: ./src/mapping.ts
+      file: ./src/curatem.ts
 templates:
   - kind: ethereum/contract
     name: CuratemCommunity
@@ -48,9 +50,9 @@ templates:
         - name: SpamPredictionMarket
           file: ../curatem-contracts/abis/SpamPredictionMarket.json
       eventHandlers:
-        - event: NewSpamPredictionMarket(bytes32,bytes32,address)
+        - event: NewSpamPredictionMarket(indexed bytes32,indexed bytes32,indexed address)
           handler: handleNewSpamPM
-      file: ./src/mapping.ts
+      file: ./src/community.ts
   - kind: ethereum/contract
     name: SpamPredictionMarket
     network: {{network}}
@@ -69,12 +71,12 @@ templates:
       eventHandlers:
         - event: Initialized()
           handler: handleInitialized
-        - event: SharesBought(address,uint256)
+        - event: SharesBought(indexed address,uint256)
           handler: handleSharesBought
-        - event: SharesSold(address,uint256)
+        - event: SharesSold(indexed address,uint256)
           handler: handleSharesSold
         - event: Finalized()
           handler: handleFinalized
-        - event: SharesRedeemed(address,uint256)
+        - event: SharesRedeemed(indexed address,uint256)
           handler: handleSharesRedeemed
       file: ./src/spam_prediction_market.ts

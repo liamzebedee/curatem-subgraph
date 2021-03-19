@@ -12,9 +12,16 @@ type Market @entity {
 type Community @entity {
   id: ID!
   moderatorArbitrator: String!
-  token: String!
+  token: Token!
   markets: [Market!]! @derivedFrom(field: "community")
   spamMarkets: [SpamPredictionMarket!]! @derivedFrom(field: "community")
+}
+
+type Token @entity {
+  id: ID!
+  name: String!
+  symbol: String!
+  decimals: Int!
 }
 
 type SpamPredictionMarket @entity {
@@ -25,10 +32,8 @@ type SpamPredictionMarket @entity {
   createdAt: Int!
   spamToken: String!
   notSpamToken: String!
+  finalized: Boolean!
+  
+  sharesMinted: BigInt!
+  sharesRedeemed: BigInt!
 }
-
-# enum MarketState {
-#   OPEN,
-#   ARBITRATING,
-#   FINALIZED
-# }
